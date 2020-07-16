@@ -119,35 +119,31 @@ $VersionRegEx="/\d+\.\d+[^/]+/"
 $OverrideNonVersionedFiles = !$SkipNonVersionedFiles
 
 function Say($str) {
-    Write-Host "dotnet-install: $str"
+    try
+    {
+        Write-Host "dotnet-install: $str"
+    }
+    catch
+    {
+        Write-Output "Say error: $_ `n $($PSItem.ScriptStackTrace) `n $str"
+    }
 }
 
 function Say-Verbose($str) {
-    Write-Verbose "dotnet-install: $str"
+    try
+    {
+        Write-Verbose "dotnet-install: $str"
+    }
+    catch
+    {
+        Write-Output "Verbose error: $_ `n $($PSItem.ScriptStackTrace) `n $str"
+    }
 }
 
 function Say-Invocation($Invocation) {
     $command = $Invocation.MyCommand;
     $args = (($Invocation.BoundParameters.Keys | foreach { "-$_ `"$($Invocation.BoundParameters[$_])`"" }) -join " ")
     Say-Verbose "$command $args"
-}
-
-try
-{
-    Say "Say hello"
-}
-catch
-{
-    Write-Output "Say error: $_ $($PSItem.ScriptStackTrace)"
-}
-
-try
-{
-    Say-Verbose "Verbose hello"
-}
-catch
-{
-    Write-Output "Verbose error: $_ $($PSItem.ScriptStackTrace)"
 }
 
 function Invoke-With-Retry([ScriptBlock]$ScriptBlock, [int]$MaxAttempts = 3, [int]$SecondsBetweenAttempts = 1) {
