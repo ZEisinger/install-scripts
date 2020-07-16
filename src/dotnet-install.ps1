@@ -132,6 +132,24 @@ function Say-Invocation($Invocation) {
     Say-Verbose "$command $args"
 }
 
+try
+{
+    Say "Say hello"
+}
+catch
+{
+    Write-Output "Say error: $_"
+}
+
+try
+{
+    Say-Verbose "Verbose hello"
+}
+catch
+{
+    Write-Output "Verbose error: $_"
+}
+
 function Invoke-With-Retry([ScriptBlock]$ScriptBlock, [int]$MaxAttempts = 3, [int]$SecondsBetweenAttempts = 1) {
     $Attempts = 0
 
