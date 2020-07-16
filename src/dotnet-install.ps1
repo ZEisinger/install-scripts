@@ -125,7 +125,8 @@ function Say($str) {
     }
     catch
     {
-        Write-Output "Say error: $_ `n $($PSItem.ScriptStackTrace) `n $str"
+        # Some platforms cannot utilize Write-Host (Azure Functions, for instance). Fall back to Write-Output
+        Write-Output "dotnet-install: $str"
     }
 }
 
@@ -136,7 +137,8 @@ function Say-Verbose($str) {
     }
     catch
     {
-        Write-Output "Verbose error: $_ `n $($PSItem.ScriptStackTrace) `n $str"
+        # Some platforms cannot utilize Write-Verbose (Azure Functions, for instance). Fall back to Write-Output
+        Write-Output "dotnet-install: $str"
     }
 }
 
