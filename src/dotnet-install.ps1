@@ -138,7 +138,7 @@ try
 }
 catch
 {
-    Write-Output "Say error: $_"
+    Write-Output "Say error: $_ $($PSItem.ScriptStackTrace)"
 }
 
 try
@@ -147,7 +147,7 @@ try
 }
 catch
 {
-    Write-Output "Verbose error: $_"
+    Write-Output "Verbose error: $_ $($PSItem.ScriptStackTrace)"
 }
 
 function Invoke-With-Retry([ScriptBlock]$ScriptBlock, [int]$MaxAttempts = 3, [int]$SecondsBetweenAttempts = 1) {
